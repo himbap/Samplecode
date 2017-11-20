@@ -1,0 +1,89 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <title>Using Xrm.WebApi</title>
+    <script>
+
+        function createAccount() {
+            // collect account data
+            var data = {
+                "name": document.getElementById("txtname").value,
+                "address1_city": document.getElementById("txtcity").value,
+                "telephone1": document.getElementById("txtphone").value,
+                "numberofemployees": document.getElementById("txttotalemployees").value,
+                "websiteurl": document.getElementById("txtwebsite").value
+
+            }
+            // create account record
+            parent.Xrm.WebApi.createRecord("account", data).then(
+                function success(result) {
+                    document.getElementById("txtaccountid").value = result.id;
+                    alert("Account Created !!");
+                },
+                function (error) {
+                    alert(error.message);
+                }
+            );
+        }
+        function updateAccount() {
+            // collect account data
+            var data = {
+                "name": document.getElementById("txtname").value,
+                "address1_city": document.getElementById("txtcity").value,
+                "telephone1": document.getElementById("txtphone").value,
+                "numberofemployees": document.getElementById("txttotalemployees").value,
+                "websiteurl": document.getElementById("txtwebsite").value
+
+            }
+            //get account id
+            var accountId = document.getElementById("txtaccountid").value;
+
+            // update account record
+            parent.Xrm.WebApi.updateRecord("account", accountId, data).then(
+                function success(result) {
+                    alert("Account Record Updated");
+
+                },
+                function (error) {
+                    alert(error.message);
+
+                }
+            );
+
+        }
+        function deleteAccount() {
+            var accountId = document.getElementById("txtaccountid").value;
+            parent.Xrm.WebApi.deleteRecord("account", accountId).then(
+                function success(result) {
+                    alert("Account deleted");
+
+                },
+                function (error) {
+                    alert(error.message);
+
+                }
+            );
+        }
+    </script>
+</head>
+<body>
+    <table>
+        <tbody>
+            <tr><td>Account ID</td><td><input id="txtaccountid" type="text" readonly=""></td></tr>
+            <tr>
+                <td>Account Name</td>
+                <td><input id="txtname" type="text"></td>
+            </tr>
+            <tr><td>Main Phone</td><td><input id="txtphone" type="text"></td></tr>
+            <tr><td>City</td><td> <input id="txtcity" type="text"></td></tr>
+            <tr><td>Website</td><td><input id="txtwebsite" type="text"></td></tr>
+            <tr><td>Total Employees</td><td><input id="txttotalemployees" type="text"></td></tr>
+
+            <tr><td colspan="2"><input onclick="createAccount()" type="button" value="Add New"><input onclick="deleteAccount()" type="button" value="Delete"><input onclick="updateAccount()" type="button" value="Update"></td></tr>
+        </tbody>
+    </table>
+
+
+
+</body>
+</html>
